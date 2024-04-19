@@ -16,6 +16,9 @@ import Spinner from '../../Components/loader/Spinner';
 import Sidebar from '../../Components/sideBar/SBar';
 import SBarCollapsed from '../../Components/sideBar/SBarCollapsed';
 import chatgptLogo from "./CHATGPT_LOGO_WHITE.svg";
+import THREE_STEPS from "../../Assets/ICONS/CHAT_3_STEPS.svg";
+import DOWNLOAD_TEXT from "../../Assets/ICONS/CHAT_DOWNLOAD_TEXT.svg";
+
 import './ProductOptimization.css'; // Import CSS file for additional styles
 
 
@@ -67,7 +70,7 @@ export default function ProductOptimization() {
         anchor.href = fileToDownload;
         anchor.download = 'HELMET_DATASET_US_v1.txt'; // Name of the downloaded file
         anchor.click();
-        toast.success('HELMET_DATASET_US_v1.txt file downloaded successfully!')
+        // toast.success('HELMET_DATASET_US_v1.txt file downloaded successfully!')
     };
 
 
@@ -204,42 +207,30 @@ export default function ProductOptimization() {
                                         <p className='main-text fs-4 text-center ' style={{ textAlignLast: "center" }}>&nbsp; &nbsp;Welcome to the <b className='fw-bold'>Product Optimizer AI Assistant</b>, the simplest and re- <br />liable way to optimize your products, reduce product costs, conduct <br /> product research, and material exchange, all you need in one place.
                                         </p>
 
-                                        <div style={{ position: 'relative', marginTop: '2rem' }}>
-                                            <strong className='text-black fs-5 fw-bold' style={{ fontFamily: '"Roboto Condensed", sans-serif' }}>To start a new chat, simply click the button below:</strong>
-                                            {corpusID !== null && <div className="bg-light pt-2 px-3 d-flex gap-2 rounded-sm" onClick={handleDownload} style={{ width: 'max-content', cursor: "pointer", border: '1px solid light-gray', position: 'absolute', top: '-10px', left: '110%' }}>
-                                                <img src={GUIDE_DOC} alt="guide-doc" style={{ height: '3rem' }} />
-                                                <p style={{ fontFamily: '"Roboto Condensed", sans-serif', fontSize: '.6rem' }}>For quick tests, optionally you <br /> can download a product <br /> description example here.</p>
+                                        <div >
+                                            <strong className='text-black fs-5 fw-bold ' style={{ fontFamily: '"Roboto Condensed", sans-serif', marginLeft: '9rem', marginRight: '9rem' }}>To start a new chat, simply click the button below:</strong>
+                                            {corpusID !== null && <div onClick={handleDownload} style={{ cursor: "pointer", display: 'inline-block', float: 'right', right: '2rem' }}>
+                                                <img src={DOWNLOAD_TEXT} className='guide-doc' alt="guide-doc" style={{ width: '11rem', marginLeft: '10rem', marginTop: '-30px' }} />
                                             </div>}
                                         </div>
                                         {/* ... */}
                                         {corpusID === null
 
                                             ? creatingCorpus
-                                                ? <button style={{ width: '100%', border: '0', backgroundColor: 'transparent', marginTop: '2rem' }}><Spinner /></button>
+                                                ? <ThreeDots
+                                                    visible={true}
+                                                    height="30"
+                                                    width="30"
+                                                    color="black"
+                                                    radius="9"
+                                                    ariaLabel="three-dots-loading"
+                                                    wrapperStyle={{}}
+                                                    wrapperClass=""
+                                                />
                                                 : <button onClick={startChat} style={{ width: '100%', border: '0', backgroundColor: 'transparent', marginTop: '2rem' }}><img src={BTN_START} alt="P-box" style={{ width: '16rem' }} /></button>
 
-                                            : <div className="row ms-auto " style={{ marginTop: '2rem' }}>
-                                                <div className="col-4 mx-auto" >
-                                                    <div className='mt-3' style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '1.2rem', borderRight: '1px solid gray' }}>
-                                                        <img src={STEP_ONE} alt="step" style={{ width: '3rem', marginTop: '-29px' }} />
-                                                        <p className=' me-3' style={{ fontFamily: '"Roboto Condensed", sans-serif', fontSize: '0.95rem', }}>Upload your <br /> product <br /> description</p>
-                                                    </div>
-                                                </div>
-
-                                                <div className="col-4 mx-auto" >
-                                                    <div className='mt-3 pe-4' style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '1.2rem', borderRight: '1px solid gray' }}>
-                                                        <img src={STEP_TWO} alt="step" style={{ width: '3rem', marginTop: '-29px', marginLeft: '' }} />
-                                                        <p style={{ fontFamily: '"Roboto Condensed", sans-serif', fontSize: '0.95rem', }}>Just say what type of optimization you want to do on product.</p>
-                                                    </div>
-                                                </div>
-                                                <div className="col-4 mx-auto" >
-                                                    <div className='mt-3' style={{ display: 'flex', gap: '1.2rem', }}>
-                                                        <img src={STEP_THREE} alt="step" style={{ width: '3rem', marginTop: '-29px' }} />
-                                                        <p style={{ fontFamily: '"Roboto Condensed", sans-serif', fontSize: '0.95rem', }}>Click Submit to <br /> start getting <br />valuable insights</p>
-                                                    </div>
-                                                </div>
-
-
+                                            : <div className="row mx-auto mt-4">
+                                                <img src={THREE_STEPS} alt="" style={{ width: '45rem' }} className='img-fluid' />
                                             </div>}
                                     </div>
                                 </div>}

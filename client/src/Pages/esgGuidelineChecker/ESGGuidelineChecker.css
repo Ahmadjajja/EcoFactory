@@ -150,7 +150,7 @@
   
   /* MEDIA QUERY */
   
-  @media screen and (min-width: 1534px) and (max-width: 1636px) {
+  /* @media screen and (min-width: 1534px) and (max-width: 1636px) {
     .sideBar {
       width: 25vw !important;
     }
@@ -166,11 +166,20 @@
     .sideBar {
       width: 25% !important;
     }
-  }
+  } */
   
-  @media screen and (min-width: 1024px) and (max-width: 1259px) {
-    .sideBar {
-      width: 45vw !important;
+  @media screen and (min-width: 1024px) and (max-width: 1163px) {
+    .sbar {
+      width: 36% !important;
+    }
+    .guide-doc{
+      margin-top: 0 !important;
+    }
+  }
+
+  @media screen and (min-width: 1163px) and (max-width: 1284px) {
+    .sbar {
+      width: 30% !important;
     }
   }
   

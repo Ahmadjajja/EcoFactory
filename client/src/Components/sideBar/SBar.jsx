@@ -61,7 +61,7 @@ export default function SBar({ collapsed }) {
     ]
 
     return (
-        <Sidebar className='sideBar' collapsed={collapsed} style={{ display: collapsed ? "none" : "block", height : '', width: "25%", position: "relative" }}>
+        <Sidebar className='sbar'  collapsed={collapsed} style={{ display: collapsed ? "none" : "block", height : '', width: "23%", position: "relative" }}>
             {/* side bar content  */}
             {/* Aleeza you have to work here */}
             <div className="container-fluid sideBar-scroll " style={{ backgroundColor: "#2f3135", height: '90vh', }}>
@@ -99,7 +99,7 @@ export default function SBar({ collapsed }) {
                                                     <img src={currElm.to === path ? currElm.iconActive : currElm.icon} alt="icon" style={{ width: '1.4rem', marginRight: ".9rem" }} />
                                                     <span style={{color : currElm.to === path && '#1bd4ad'}}>{currElm.title} <small>{currElm.subTitle}</small></span>
                                                 </span>
-                                                <BiDotsHorizontalRounded />
+                                                {/* <BiDotsHorizontalRounded /> */}
                                             </Link>
                                         </>
                                     )
