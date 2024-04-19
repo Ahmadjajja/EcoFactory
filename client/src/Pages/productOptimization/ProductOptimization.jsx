@@ -6,18 +6,14 @@ import { ThreeDots } from "react-loader-spinner";
 import { toast } from 'react-toastify';
 import fileToDownload from "../../Assets/HELMET_DATASET_US_v1.txt";
 import BTN_START from '../../Assets/ICONS/BT_START_CHAT.svg';
-import GUIDE_DOC from '../../Assets/ICONS/CHAT_ASSETS-page-1.png';
+import THREE_STEPS from "../../Assets/ICONS/CHAT_3_STEPS.svg";
+import DOWNLOAD_TEXT from "../../Assets/ICONS/CHAT_DOWNLOAD_TEXT.svg";
 import cogwheel from "../../Assets/ICONS/ICON_ECOFACTOR.svg";
 import ecofactor from "../../Assets/ICONS/LOGO_ECOFACTOR_FINAL (1).svg";
-import STEP_ONE from '../../Assets/ICONS/STEP1.svg';
-import STEP_TWO from '../../Assets/ICONS/STEP2.svg';
-import STEP_THREE from '../../Assets/ICONS/STEP3.svg';
 import Spinner from '../../Components/loader/Spinner';
 import Sidebar from '../../Components/sideBar/SBar';
 import SBarCollapsed from '../../Components/sideBar/SBarCollapsed';
 import chatgptLogo from "./CHATGPT_LOGO_WHITE.svg";
-import THREE_STEPS from "../../Assets/ICONS/CHAT_3_STEPS.svg";
-import DOWNLOAD_TEXT from "../../Assets/ICONS/CHAT_DOWNLOAD_TEXT.svg";
 
 import './ProductOptimization.css'; // Import CSS file for additional styles
 
@@ -148,7 +144,7 @@ export default function ProductOptimization() {
             setPromptsArr([...promptsArr, prompt]);
             console.log("corpus id : ", corpusID);
             const postData = {
-                query: prompt + "? Give me response in JSON & there should be 1 key named response",
+                query: prompt + " Don't use * or # or any special character and give response in single paragraph with no line break",
                 corpus_id: corpusID
             };
             setPrompt('');
@@ -159,8 +155,9 @@ export default function ProductOptimization() {
                 // Make a POST request using axios                             
                 const response = await axios.post('https://ecofactor.onrender.com/api/product_optimize', postData);
                 console.log("query response -> ", response.data.response);
-                setRecentAnswer(response.data.response);
-                setPromptsArr(prevPromptsArr => [...prevPromptsArr, response.data.response]);
+                console.log("response.data -> ", response.data);
+                setRecentAnswer(response.data);
+                setPromptsArr(prevPromptsArr => [...prevPromptsArr, response.data]);
                 setLoading(false);
                 setError(null); // Reset error state
             } catch (error) {
@@ -257,7 +254,7 @@ export default function ProductOptimization() {
                                                                 :
                                                                 <div className="row " style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
                                                                     <img src={chatgptLogo} className='rounded-circle mb-auto me-2' style={profileStyle} alt="" />
-                                                                    <div className="col-9 me-auto shadow-none p-3 mb-5 bg-body-tertiary rounded">{prom}</div>
+                                                                    <div className="col-9 me-auto shadow-none p-3 mb-5 bg-body-tertiary rounded"><div dangerouslySetInnerHTML={{ __html: prom }} /></div>
                                                                     <div className="col-3"></div>
                                                                 </div>
                                                             }
