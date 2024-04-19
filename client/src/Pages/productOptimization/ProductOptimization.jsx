@@ -1,5 +1,5 @@
 import axios from 'axios'; // Import axios for making HTTP requests
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaUpload } from "react-icons/fa";
 import { IoMdAttach } from "react-icons/io";
 import { ThreeDots } from "react-loader-spinner";
@@ -34,30 +34,27 @@ export default function ProductOptimization() {
     const [enableChat, setenableChat] = useState(true);
     const [file, setfile] = useState(null);
 
-    // useEffect(() => {
-    //     // Attach event listener when component mounts
-    //     window.addEventListener("beforeunload", handleBeforeUnload);
+    const [count, setCount] = useState(0)
 
-    //     // Cleanup function to remove event listener when component unmounts
-    //     return () => {
-    //         window.removeEventListener("beforeunload", handleBeforeUnload);
-    //     };
-    // }, []);
+    useEffect(() => {
+        return () => {
 
-    // const handleBeforeUnload = async (event) => {
-    //     // Call your API to delete the corpus before the user leaves the page
-    //     alert("good by ecofactor")
-    //     if (corpusID) {
-    //         try {
-    //             const response = await axios.post('https://ecofactor.onrender.com/api/delete_corpus', {
-    //                 "corpus_id": corpusID
-    //             });
-    //             console.log("Session deleted successfully!");
-    //         } catch (error) {
-    //             console.error("Error deleting session:", error);
-    //         }
-    //     }
-    // };
+            // Call your API here
+            if (count == 1) {
+                try {
+                    const response = axios.post('https://ecofactor.onrender.com/api/delete_corpus', {
+                        "corpus_id": corpusID
+                    });
+                    console.log("Session deleted successfully! : ", response);
+                } catch (error) {
+                    console.error("Error deleting session:", error);
+                }
+            }
+        };
+    }, [count]);
+
+
+
 
     // Download file handler
     const handleDownload = () => {
@@ -80,7 +77,7 @@ export default function ProductOptimization() {
 
         try {
             const response = await axios.get('https://ecofactor.onrender.com/api/create_corpus');
-
+            setCount(count + 1)
             // successful response
             console.log('response.data:', response.data);
             setcorpusID(response.data)
