@@ -55,7 +55,7 @@ const SBarCollapsed = () => {
 
   ]
   return <>
-    <div style={{ width: '4vw', backgroundColor: '#2f3135', height: '90vh' }}>
+    <div style={{ width: '4vw', backgroundColor: '#2f3135', height: '90vh',  }}>
       <div className=" mt-4" style={{ display: 'flex', flexDirection: 'column', justifyContent: "center", alignItems: 'center' }}>
         <div className="col mx-3 mt-5 me-1 rounded p-2 " style={{ backgroundColor: "#494c51", }}>
           {inventoryData.map((currElm) => {

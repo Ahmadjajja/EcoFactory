@@ -175,6 +175,9 @@
     .guide-doc{
       margin-top: 0 !important;
     }
+    .link-text {
+      font-size: 1.1rem !important;
+    }
   }
 
   @media screen and (min-width: 1163px) and (max-width: 1284px) {

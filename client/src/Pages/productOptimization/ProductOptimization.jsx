@@ -90,7 +90,7 @@ export default function ProductOptimization() {
             setcorpusID(response.data)
             // setLoading(false)
             toast.success('Session created successfully!')
-            alert("response.data : ", response.data)
+            // alert("response.data : ", response.data)
 
 
         } catch (error) {
@@ -204,11 +204,11 @@ export default function ProductOptimization() {
                                         <div>
                                             <img src={cogwheel} className='rounded circle ' style={{ width: '40px' }} alt="cogwheel" /></div>
                                         {/* <h3 className='heading3'>&nbsp; Just select the product you want to optimize,<br /> and describe below what you want to optimize...</h3> */}
-                                        <p className='main-text fs-4 text-center ' style={{ textAlignLast: "center" }}>&nbsp; &nbsp;Welcome to the <b className='fw-bold'>Product Optimizer AI Assistant</b>, the simplest and re- <br />liable way to optimize your products, reduce product costs, conduct <br /> product research, and material exchange, all you need in one place.
+                                        <p className='main-text fs-4 text-center ' style={{ textAlignLast: "center" }}>&nbsp; &nbsp;Welcome to the <b className='fw-bold'>Product Optimizer AI Assistant</b>, the simplest and re- <br className='d-none d-xl-block' />liable way to optimize your products, reduce product costs, conduct <br className='d-none d-xl-block' /> product research, and material exchange, all you need in one place.
                                         </p>
 
                                         <div >
-                                            <strong className='text-black fs-5 fw-bold ' style={{ fontFamily: '"Roboto Condensed", sans-serif', marginLeft: '9rem', marginRight: '9rem' }}>To start a new chat, simply click the button below:</strong>
+                                            <strong className='text-black text-center fs-5 fw-bold link-text ' style={{ fontFamily: '"Roboto Condensed", sans-serif', marginLeft: '9rem', marginRight: '9rem' }}>To start a new chat, simply click the button below:</strong>
                                             {corpusID !== null && <div onClick={handleDownload} style={{ cursor: "pointer", display: 'inline-block', float: 'right', right: '2rem' }}>
                                                 <img src={DOWNLOAD_TEXT} className='guide-doc' alt="guide-doc" style={{ width: '11rem', marginLeft: '10rem', marginTop: '-30px' }} />
                                             </div>}
