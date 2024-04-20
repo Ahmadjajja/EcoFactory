@@ -148,7 +148,7 @@ export default function ProductOptimization() {
             setPromptsArr([...promptsArr, prompt]);
             console.log("corpus id : ", corpusID);
             const postData = {
-                query: prompt + "? Give me response in JSON & there should be 1 key named response",
+                query: prompt + " Don't use * or # or any special character and give response in single paragraph with no line break",
                 corpus_id: corpusID
             };
             setPrompt('');
@@ -158,9 +158,9 @@ export default function ProductOptimization() {
             try {
                 // Make a POST request using axios                             
                 const response = await axios.post('https://ecofactor.onrender.com/api/product_optimize', postData);
-                console.log("query response -> ", response.data.response);
-                setRecentAnswer(response.data.response);
-                setPromptsArr(prevPromptsArr => [...prevPromptsArr, response.data.response]);
+                console.log("query response -> ", response.data);
+                setRecentAnswer(response.data);
+                setPromptsArr(prevPromptsArr => [...prevPromptsArr, response.data]);
                 setLoading(false);
                 setError(null); // Reset error state
             } catch (error) {
