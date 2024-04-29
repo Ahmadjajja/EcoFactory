@@ -1,26 +1,29 @@
 import axios from 'axios'; // Import axios for making HTTP requests
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaUpload } from "react-icons/fa";
 import { IoMdAttach } from "react-icons/io";
 import { ThreeDots } from "react-loader-spinner";
 import { toast } from 'react-toastify';
 import fileToDownload from "../../Assets/HELMET_DATASET_US_v1.txt";
 import BTN_START from '../../Assets/ICONS/BT_START_CHAT.svg';
-import GUIDE_DOC from '../../Assets/ICONS/CHAT_ASSETS-page-1.png';
+import THREE_STEPS from "../../Assets/ICONS/CHAT_3_STEPS.svg";
+import DOWNLOAD_TEXT from "../../Assets/ICONS/CHAT_DOWNLOAD_TEXT.svg";
 import cogwheel from "../../Assets/ICONS/ICON_ECOFACTOR.svg";
+
 import ecofactor from "../../Assets/ICONS/LOGO_ECOFACTOR_v02.svg";
-import STEP_ONE from '../../Assets/ICONS/STEP1.svg';
-import STEP_TWO from '../../Assets/ICONS/STEP2.svg';
-import STEP_THREE from '../../Assets/ICONS/STEP3.svg';
+
+
 import Spinner from '../../Components/loader/Spinner';
 import Sidebar from '../../Components/sideBar/SBar';
 import SBarCollapsed from '../../Components/sideBar/SBarCollapsed';
 import chatgptLogo from "./CHATGPT_LOGO_WHITE.svg";
-import THREE_STEPS from "../../Assets/ICONS/CHAT_3_STEPS.svg";
-import DOWNLOAD_TEXT from "../../Assets/ICONS/CHAT_DOWNLOAD_TEXT.svg";
+
+// import THREE_STEPS from "../../Assets/ICONS/CHAT_3_STEPS.svg";
+// import DOWNLOAD_TEXT from "../../Assets/ICONS/CHAT_DOWNLOAD_TEXT.svg";
 import DISABLED_BTN from '../../Assets/ICONS/BT_SUBMIT_DISABLE.svg'
 import colorBar from "../../Assets/ICONS/COLORBAR.png";
 import colorBarBottom from "../../Assets/ICONS/COLORBAR copy.png";
+
 
 import './ProductOptimization.css'; // Import CSS file for additional styles
 import Markdown from 'markdown-to-jsx'
@@ -41,32 +44,29 @@ export default function ProductOptimization() {
     const [enableChat, setenableChat] = useState(true);
     const [file, setfile] = useState(null);
     const [content, setcontent] = useState('');
-    
 
-    // useEffect(() => {
-    //     // Attach event listener when component mounts
-    //     window.addEventListener("beforeunload", handleBeforeUnload);
 
-    //     // Cleanup function to remove event listener when component unmounts
-    //     return () => {
-    //         window.removeEventListener("beforeunload", handleBeforeUnload);
-    //     };
-    // }, []);
+    const [count, setCount] = useState(0)
 
-    // const handleBeforeUnload = async (event) => {
-    //     // Call your API to delete the corpus before the user leaves the page
-    //     alert("good by ecofactor")
-    //     if (corpusID) {
-    //         try {
-    //             const response = await axios.post('https://ecofactor.onrender.com/api/delete_corpus', {
-    //                 "corpus_id": corpusID
-    //             });
-    //             console.log("Session deleted successfully!");
-    //         } catch (error) {
-    //             console.error("Error deleting session:", error);
-    //         }
-    //     }
-    // };
+    useEffect(() => {
+        return () => {
+
+            // Call your API here
+            if (count == 1) {
+                try {
+                    const response = axios.post('https://ecofactor.onrender.com/api/delete_corpus', {
+                        "corpus_id": corpusID
+                    });
+                    console.log("Session deleted successfully! : ", response);
+                } catch (error) {
+                    console.error("Error deleting session:", error);
+                }
+            }
+        };
+    }, [count]);
+
+
+
 
     // Download file handler
     const handleDownload = () => {
@@ -89,7 +89,7 @@ export default function ProductOptimization() {
 
         try {
             const response = await axios.get('https://ecofactor.onrender.com/api/create_corpus');
-
+            setCount(count + 1)
             // successful response
             console.log('response.data:', response.data);
             setcorpusID(response.data)
@@ -155,8 +155,10 @@ export default function ProductOptimization() {
             console.log("corpus id : ", corpusID);
             const postData = {
                 query: prompt + " Don't use * or # or any special character and give response in single paragraph with no line break",
+
                 corpus_id: corpusID,
-                contents : content
+                contents: content
+
             };
             setPrompt('');
 
@@ -165,7 +167,9 @@ export default function ProductOptimization() {
             try {
                 // Make a POST request using axios                             
                 const response = await axios.post('https://ecofactor.onrender.com/api/product_optimize', postData);
+
                 console.log("query response -> ", response.data);
+
                 setRecentAnswer(response.data);
                 setPromptsArr(prevPromptsArr => [...prevPromptsArr, response.data]);
                 setLoading(false);
@@ -181,8 +185,8 @@ export default function ProductOptimization() {
 
     return (
         <>
-            <img src={colorBar} alt="eco" style={{position : 'absolute', top : '-30px' , left : '37%'}} />
-        <img src={colorBarBottom} alt="eco" style={{position : 'absolute', bottom : '0' , left : '37.5%'}} />
+            <img src={colorBar} alt="eco" style={{ position: 'absolute', top: '-30px', left: '37%' }} />
+            <img src={colorBarBottom} alt="eco" style={{ position: 'absolute', bottom: '0', left: '37.5%' }} />
 
             <div >
                 <div style={{ height: '10vh', backgroundColor: '#2f3135', }}>
@@ -265,9 +269,11 @@ export default function ProductOptimization() {
                                                                 :
                                                                 <div className="row " style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
                                                                     <img src={chatgptLogo} className='rounded-circle mb-auto me-2' style={profileStyle} alt="" />
+
                                                                     <div className="col-9 me-auto shadow-none p-3 mb-5 bg-body-tertiary rounded"><Markdown>
                                                                         {prom}
                                                                     </Markdown></div>
+
                                                                     <div className="col-3"></div>
                                                                 </div>
                                                             }
@@ -323,7 +329,7 @@ export default function ProductOptimization() {
                                                     }
                                                     <input value={prompt} onChange={(e) => setPrompt(e.target.value)} type="text" className="form-control " placeholder="Please type or say what kind of optimizations you are looking for ?" aria-label="Username" aria-describedby="basic-addon1" />
                                                     <span className="input-group-text" id="basic-addon1" style={{ backgroundColor: "white", borderTopRightRadius: "20px", borderBottomRightRadius: "20px", cursor: enableChat ? 'not-allowed' : 'pointer' }}>
-                                                     {enableChat ? <img src={DISABLED_BTN} alt="dis" style={{width : '110px'}} /> :  <button disabled={enableChat} onClick={handleSubmit} className='btn btnGradient' style={{ backgroundColor: "#0076c3" }}>{loading ? <Spinner /> : 'Submit'}</button>}   
+                                                        {enableChat ? <img src={DISABLED_BTN} alt="dis" style={{ width: '110px' }} /> : <button disabled={enableChat} onClick={handleSubmit} className='btn btnGradient' style={{ backgroundColor: "#0076c3" }}>{loading ? <Spinner /> : 'Submit'}</button>}
                                                     </span>
                                                 </div>
                                                 {error && <p className="text-danger">{error}</p>}
