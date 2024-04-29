@@ -8,7 +8,7 @@ import fileToDownload from "../../Assets/HELMET_DATASET_US_v1.txt";
 import BTN_START from '../../Assets/ICONS/BT_START_CHAT.svg';
 import GUIDE_DOC from '../../Assets/ICONS/CHAT_ASSETS-page-1.png';
 import cogwheel from "../../Assets/ICONS/ICON_ECOFACTOR.svg";
-import ecofactor from "../../Assets/ICONS/LOGO_ECOFACTOR_FINAL (1).svg";
+import ecofactor from "../../Assets/ICONS/LOGO_ECOFACTOR_v02.svg";
 import STEP_ONE from '../../Assets/ICONS/STEP1.svg';
 import STEP_TWO from '../../Assets/ICONS/STEP2.svg';
 import STEP_THREE from '../../Assets/ICONS/STEP3.svg';
@@ -18,9 +18,12 @@ import SBarCollapsed from '../../Components/sideBar/SBarCollapsed';
 import chatgptLogo from "./CHATGPT_LOGO_WHITE.svg";
 import THREE_STEPS from "../../Assets/ICONS/CHAT_3_STEPS.svg";
 import DOWNLOAD_TEXT from "../../Assets/ICONS/CHAT_DOWNLOAD_TEXT.svg";
+import DISABLED_BTN from '../../Assets/ICONS/BT_SUBMIT_DISABLE.svg'
+import colorBar from "../../Assets/ICONS/COLORBAR.png";
+import colorBarBottom from "../../Assets/ICONS/COLORBAR copy.png";
 
 import './ProductOptimization.css'; // Import CSS file for additional styles
-
+import Markdown from 'markdown-to-jsx'
 
 
 
@@ -37,6 +40,8 @@ export default function ProductOptimization() {
     const [corpusID, setcorpusID] = useState(null);
     const [enableChat, setenableChat] = useState(true);
     const [file, setfile] = useState(null);
+    const [content, setcontent] = useState('');
+    
 
     // useEffect(() => {
     //     // Attach event listener when component mounts
@@ -127,6 +132,7 @@ export default function ProductOptimization() {
 
             // console.log(response.data);
             // setLoading(false)
+            setcontent(response.data)
             toast.success('File uploaded successfully!')
             setfile(null)
             setenableChat(false)
@@ -149,7 +155,8 @@ export default function ProductOptimization() {
             console.log("corpus id : ", corpusID);
             const postData = {
                 query: prompt + " Don't use * or # or any special character and give response in single paragraph with no line break",
-                corpus_id: corpusID
+                corpus_id: corpusID,
+                contents : content
             };
             setPrompt('');
 
@@ -174,37 +181,38 @@ export default function ProductOptimization() {
 
     return (
         <>
-            {/*<img src={colorBar} alt="eco" style={{ position: 'absolute', top: '-26px', left: '35%' }} />*/}
+            <img src={colorBar} alt="eco" style={{position : 'absolute', top : '-30px' , left : '37%'}} />
+        <img src={colorBarBottom} alt="eco" style={{position : 'absolute', bottom : '0' , left : '37.5%'}} />
 
             <div >
                 <div style={{ height: '10vh', backgroundColor: '#2f3135', }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', height: '100%' }}>
-                        <img src={ecofactor} alt="" style={{ height: '4.2rem', marginTop: ' 1.9rem', marginLeft: '1.2rem' }} />
-                        <h2 style={textStyle} >Product Optmizer AI Assistant</h2>
+                    <div className='w-100' style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', height: '100%' }}>
+                        <img src={ecofactor} alt="" className='w-0 me-auto' style={{ height: '5rem', marginTop: ' 2.1rem', marginLeft: '1.2rem' }} />
+                        <h2 style={textStyle} >Product Optimizer Ai</h2>
                     </div>
 
                 </div>
-                <div id='productOptimization' style={{ display: 'flex', height: '90vh' }}>
+                <div id='productOptimization ' style={{ display: 'flex', height: '90vh' }}>
 
 
                     <Sidebar collapsed={collapsed} />
                     {collapsed && <SBarCollapsed />}
 
-                    <main className='main' style={{ width: collapsed ? "96vw" : "77vw", backgroundColor: "#2f3135", }}>
+                    <main className='main ' style={{ width: collapsed ? "96vw" : "78vw", backgroundColor: "#2f3135", }}>
                         <div onClick={() => setCollapsed(!collapsed)} style={{ cursor: "pointer", color: "#c1c1c1" }}>
-                            <span className={` ${collapsed ? 'rotate-left' : 'rotate-right'}`} style={{ ...iconStyles, color: "#ccc", marginLeft: collapsed ? '-6px' : '-10px' }}>{collapsed ? <>&#187;</> : <>&#171;</>}</span>
+                            <span className={` ${collapsed ? 'rotate-left' : 'rotate-right'}`} style={{ ...iconStyles, color: "#ccc", marginLeft: collapsed ? '-11px' : '-12px' }}>{collapsed ? <>&#187;</> : <>&#171;</>}</span>
                         </div>
 
-                        <div className="container-fluid d-flex justify-content-center align-items-center" style={{ height: "100%", }}>
+                        <div className="container-fluid ps-1 d-flex justify-content-center align-items-center" style={{ height: "100%", }}>
 
                             <div className="container-fluid" style={{ height: "100%", display: 'flex', flexDirection: 'column' }}>
 
-                                {promptsArr.length === 0 && <div className="row" style={{ backgroundColor: "#e6e6e6", height: "80%", borderTopLeftRadius: "25px", borderTopRightRadius: "25px" }}>
+                                {promptsArr.length === 0 && <div className="row" style={{ backgroundColor: "#e6e6e6", height: "80%", borderTopLeftRadius: "35px", borderTopRightRadius: "35px" }}>
                                     <div className="col  d-flex flex-column gap-3 py-2 justify-content-center align-items-center" style={{ margin: "0 auto", maxWidth: "800px" }}>
                                         <div>
                                             <img src={cogwheel} className='rounded circle ' style={{ width: '40px' }} alt="cogwheel" /></div>
                                         {/* <h3 className='heading3'>&nbsp; Just select the product you want to optimize,<br /> and describe below what you want to optimize...</h3> */}
-                                        <p className='main-text fs-4 text-center ' style={{ textAlignLast: "center" }}>&nbsp; &nbsp;Welcome to the <b className='fw-bold'>Product Optimizer AI Assistant</b>, the simplest and re- <br className='d-none d-xl-block' />liable way to optimize your products, reduce product costs, conduct <br className='d-none d-xl-block' /> product research, and material exchange, all you need in one place.
+                                        <p className='main-text fs-4 text-center ' style={{ textAlignLast: "center" }}>&nbsp; &nbsp;Welcome to the <b className='fw-bold'>Product Optimizer AI Assistant</b>, the simplest and <br className='d-none d-xl-block' />reliable way to optimize your products, reduce product costs, conduct <br className='d-none d-xl-block' /> product research, and material exchange, all you need in one place.
                                         </p>
 
                                         <div >
@@ -237,9 +245,9 @@ export default function ProductOptimization() {
 
                                 {/* show prompts */}
                                 {promptsArr.length !== 0 && (
-                                    <div className="prompt-scroll-box row " style={{ backgroundColor: "#e6e6e6", height: "80%" }}>
+                                    <div className="prompt-scroll-box row " style={{ backgroundColor: "#e6e6e6", height: "80%", borderTopLeftRadius: "35px", borderTopRightRadius: "35px" }}>
                                         <div className="scroll-inner ">
-                                            <div className=" row prompts px-5 pt-4" style={{ backgroundColor: "#e6e6e6", height: "80%" }}>
+                                            <div className=" row prompts px-5 pt-4" style={{ backgroundColor: "#e6e6e6", height: "80%", borderTopLeftRadius: "35px", borderTopRightRadius: "35px" }}>
 
 
                                                 <div className="container-fluid">
@@ -257,7 +265,9 @@ export default function ProductOptimization() {
                                                                 :
                                                                 <div className="row " style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
                                                                     <img src={chatgptLogo} className='rounded-circle mb-auto me-2' style={profileStyle} alt="" />
-                                                                    <div className="col-9 me-auto shadow-none p-3 mb-5 bg-body-tertiary rounded">{prom}</div>
+                                                                    <div className="col-9 me-auto shadow-none p-3 mb-5 bg-body-tertiary rounded"><Markdown>
+                                                                        {prom}
+                                                                    </Markdown></div>
                                                                     <div className="col-3"></div>
                                                                 </div>
                                                             }
@@ -286,11 +296,11 @@ export default function ProductOptimization() {
                                     </div>
                                 )}
 
-                                <div className="row" style={{ backgroundColor: "#e6e6e6", height: "15%", borderBottomLeftRadius: "25px", borderBottomRightRadius: "25px" }}>
-                                    <div className="col " style={{ backgroundColor: "#e6e6e6", borderBottomLeftRadius: "25px", borderBottomRightRadius: "25px" }}>
+                                <div className="row" style={{ backgroundColor: "#e6e6e6", height: "17%", borderBottomLeftRadius: "35px", borderBottomRightRadius: "35px" }}>
+                                    <div className="col " style={{ backgroundColor: "#e6e6e6", borderBottomLeftRadius: "35px", borderBottomRightRadius: "35px" }}>
                                         <div className="row">
                                             <div className="col"></div>
-                                            <div className={`${collapsed ? 'col-9' : 'col-11'} mx-auto`}>
+                                            <div className={`${collapsed ? 'col-9' : 'col-11'} mx-auto mt-3`}>
                                                 <div className="input-group mb-3" style={{ border: "1px black solid", borderRadius: "20px", overflow: 'hidden' }}>
                                                     {
                                                         !file ?
@@ -313,7 +323,7 @@ export default function ProductOptimization() {
                                                     }
                                                     <input value={prompt} onChange={(e) => setPrompt(e.target.value)} type="text" className="form-control " placeholder="Please type or say what kind of optimizations you are looking for ?" aria-label="Username" aria-describedby="basic-addon1" />
                                                     <span className="input-group-text" id="basic-addon1" style={{ backgroundColor: "white", borderTopRightRadius: "20px", borderBottomRightRadius: "20px", cursor: enableChat ? 'not-allowed' : 'pointer' }}>
-                                                        <button disabled={enableChat} onClick={handleSubmit} className='btn btnGradient' style={{ backgroundColor: "#0076c3" }}>{loading ? <Spinner /> : 'Submit'}</button>
+                                                     {enableChat ? <img src={DISABLED_BTN} alt="dis" style={{width : '110px'}} /> :  <button disabled={enableChat} onClick={handleSubmit} className='btn btnGradient' style={{ backgroundColor: "#0076c3" }}>{loading ? <Spinner /> : 'Submit'}</button>}   
                                                     </span>
                                                 </div>
                                                 {error && <p className="text-danger">{error}</p>}
@@ -335,7 +345,7 @@ export default function ProductOptimization() {
 }
 
 const iconStyles = {
-    fontSize: '2em',
+    fontSize: '1.5em',
     lineHeight: '1em',
     position: 'absolute',
     top: '50%',
@@ -348,7 +358,7 @@ const textStyle = {
     fontWeight: 300,
     color: 'white',
     marginRight: '2.2rem',
-    marginTop: '1.5rem'
+    marginTop: '1.2rem'
 
 };
 
